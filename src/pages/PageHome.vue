@@ -16,9 +16,7 @@ export default {
   },
   data () {
     return {
-      forums: Object.values(sourceData.forums), // transform data to an array
-      posts: sourceData.posts,
-      users: sourceData.users
+      categories: Object.values(sourceData.categories)
     }
   }
 }
