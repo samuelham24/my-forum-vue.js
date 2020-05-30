@@ -1,22 +1,22 @@
 <template>
 <div class="col-full">
   <h1>Welcome to the Forum</h1>
-    <ThreadList :threads="threads"/>
+    <CategoryList :categories="categories"/>
 </div>
       
 </template>
 
 <script>
 import sourceData from '@/data/' // import data from data.json
-import ThreadList from '@/components/ThreadList' // import data from ThreadList.vue
+import CategoryList from '@/components/CategoryList' // import data from Category.vue
 console.log(sourceData)
 export default {
   components: {
-    ThreadList
+    CategoryList
   },
   data () {
     return {
-      threads: Object.values(sourceData.threads), // transform data to an array
+      forums: Object.values(sourceData.forums), // transform data to an array
       posts: sourceData.posts,
       users: sourceData.users
     }
