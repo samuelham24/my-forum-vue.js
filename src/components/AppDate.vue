@@ -12,7 +12,6 @@ export default {
       type: Number // Commonly integer, but in .js just Number
     }
   },
-
   filters: {
     humanFriendlyDate (date) {
       // access data and formatting in hover
