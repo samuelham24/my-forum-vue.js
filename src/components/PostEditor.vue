@@ -1,4 +1,5 @@
 <template>
+  <!-- Post editor to edit form and submit -->
   <form @submit.prevent="save">
     <div class="form-group">
         <textarea
