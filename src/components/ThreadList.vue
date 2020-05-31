@@ -1,56 +1,23 @@
 <template>
-  <!-- Thread list item to show a thread list from user -->
-  <div class="thread">
-    <div>
-      <p>
-        <!-- thread title as a link, with router-link without reloading page, benerfit using name: we can change route's path in index.js -->
-        <router-link :to="{name: 'ThreadShow', params: {id: thread['.key']}}">{{thread.title}}</router-link>
-      </p>
-      <p class="text-faded text-xsmall">
-        By
-        <a href="#">{{user.name}}</a>
-        ,
-        <AppDate :timestamp="thread.publishedAt" />.
-      </p>
-    </div>
-
-    <div class="activity">
-      <p class="replies-count">
-        <!-- Show replies counter -->
-        {{repliesCount}} replies
-      </p>
-
-      <img
-        class="avatar-medium"
-        src="http://i0.kym-cdn.com/photos/images/facebook/000/010/934/46623-batman_pikachu_super.png"
-        alt
-      />
-
-      <!-- <div>
-                <p class="text-xsmall">
-                    <a href="#">Bruce Wayne</a>
-                </p>
-                <p class="text-xsmall text-faded">2 hours ago</p>
-      </div>-->
-    </div>
+<!-- ThreadList to render multiple ThreadListItems -->
+  <div class="thread-list">
+    <h2 class="list-title">Threads</h2>
+    <ThreadListItem v-for="thread in threads" :thread="thread" :key="thread['.key']" />
   </div>
 </template>
 
 <script>
+import ThreadListItem from './ThreadListItem' // import thread list item
+
 export default {
-  props: {
-    thread: {
-      // aware of which thread to render
-      required: true,
-      type: Object
-    }
+  components: {
+    ThreadListItem
   },
-  computed: {
-    repliesCount () {
-      return Object.keys(this.thread.posts).length - 1 // count the replies with array
-    },
-    user () {
-      return this.$store.state.users[this.thread.userId]
+
+  props: {
+    threads: {
+      required: true,
+      type: Array // pass each thread of the array to ThreadListItem component
     }
   }
 }
