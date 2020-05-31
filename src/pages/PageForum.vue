@@ -11,38 +11,39 @@
     </div>
 
     <div class="col-full push-top">
-      <ThreadList :threads="threads"/>
+      <ThreadList :threads="threads" />
     </div>
   </div>
 </template>
 
 <script>
-    import ThreadList from '@/components/ThreadList'
-    import sourceData from '@/data'
-    export default {
-      components: {
-        ThreadList
-      },
-      props: {
-        id: {
-          required: true,
-          type: String
-        }
-      },
-      computed: { // evaluated every time the dependencies change
-        forum () {
-          return sourceData.forums[this.id]
-        },
-        threads () {
-          return Object.values(sourceData.threads) // object convert to array
-            .filter(thread => thread.forumId === this.id) // find forum's threads
-        }
-      }
+import ThreadList from '@/components/ThreadList'
+
+export default {
+  components: {
+    ThreadList
+  },
+  props: {
+    id: {
+      required: true,
+      type: String
     }
+  },
+  computed: {
+    // evaluated every time the dependencies change
+    forum () {
+      return this.$store.state.forums[this.id]
+    },
+    threads () {
+      return Object.values(this.$store.state.threads) // object convert to array
+        .filter(thread => thread.forumId === this.id) // find forum's threads
+    }
+  }
+}
 </script>
 
 <style scoped>
-  .forum-wrapper {
-    width: 100%;
-  }
+.forum-wrapper {
+  width: 100%
+}
 </style>
