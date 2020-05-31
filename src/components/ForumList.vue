@@ -1,41 +1,46 @@
 <template>
-    <!-- Forum list item to show a link to the forum page -->
-  <div class="forum-listing">
-    <div class="forum-details">
-      <!-- Forum list like pets, vehicles, annoucement, etc -->
-      <router-link
-        class="text-xlarge"
-        :to="{name: 'Forum', params: {id: forum['.key']}}"
-      >
-        {{forum.name}}
-      </router-link>
-      <p>{{forum.description}}</p>
+  <!-- Post editor to edit form and submit -->
+  <form @submit.prevent="save">
+    <div class="form-group">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          class="form-input"
+          v-model="text"
+        ></textarea>
     </div>
-
-    <div class="threads-count">
-      <p class="count">{{threadsCount}}</p>
-      {{threadsCount === 1 ? 'thread' : 'threads'}}
+    <div class="form-actions">
+      <button class="btn-blue">Submit post</button>
     </div>
-
-    <div class="last-thread">
-      <!-- TODO: implement later -->
-    </div>
-  </div>
+  </form>
 </template>
 
 <script>
     export default {
       props: {
-        forum: {
-          required: true,
-          type: Object
+        threadId: {
+          required: true
         }
       },
-      computed: {
-        threadsCount () {
-          return this.forum.threads
-            ? Object.values(this.forum.threads).length
-            : 0
+      data () {
+        return {
+          text: ''
+        }
+      },
+      methods: {
+        save () {
+          const postId = 'greatPost' + Math.random()
+          const post = {
+            text: this.text,
+            publishedAt: Math.floor(Date.now() / 1000),
+            threadId: this.threadId,
+            userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2',
+            '.key': postId
+          }
+          this.text = ''
+          this.$emit('save', {post})
         }
       }
     }
