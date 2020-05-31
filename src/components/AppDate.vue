@@ -1,4 +1,5 @@
 <template>
+<!-- AppDate to get date data formatting -->
   <span :title="timestamp | humanFriendlyDate">{{timestamp | diffForHumans}}</span>
 </template>
 
@@ -12,6 +13,7 @@ export default {
       type: Number // Commonly integer, but in .js just Number
     }
   },
+
   filters: {
     humanFriendlyDate (date) {
       // access data and formatting in hover
