@@ -2,6 +2,7 @@
     <!-- Forum list item to show a link to the forum page -->
   <div class="forum-listing">
     <div class="forum-details">
+      <!-- Forum list like pets, vehicles, annoucement, etc -->
       <router-link
         class="text-xlarge"
         :to="{name: 'Forum', params: {id: forum['.key']}}"
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+    import {countObjectProperties} from '@/utils'
+
     export default {
       props: {
         forum: {
@@ -32,9 +35,7 @@
       },
       computed: {
         threadsCount () {
-          return this.forum.threads
-            ? Object.values(this.forum.threads).length
-            : 0
+          return countObjectProperties(this.forum.threads)
         }
       }
     }
