@@ -1,16 +1,16 @@
 <template>
+  <!-- Thread list item to show a thread list from user -->
   <div class="thread">
     <div>
       <p>
         <!-- thread title as a link, with router-link without reloading page, benerfit using name: we can change route's path in index.js -->
-        <router-link :to="{name: 'ThreadShow', params: {id: thread['.key']}}">
-        {{thread.title}}
-        </router-link>
+        <router-link :to="{name: 'ThreadShow', params: {id: thread['.key']}}">{{thread.title}}</router-link>
       </p>
       <p class="text-faded text-xsmall">
         By
         <a href="#">{{user.name}}</a>
-        , <AppDate :timestamp="thread.publishedAt"/>.
+        ,
+        <AppDate :timestamp="thread.publishedAt" />.
       </p>
     </div>
 
@@ -37,12 +37,9 @@
 </template>
 
 <script>
-import sourceData from '@/data'
-import AppDate from './AppDate'
+import { countObjectProperties } from '@/utils'
+
 export default {
-  components: {
-    AppDate
-  },
   props: {
     thread: {
       // aware of which thread to render
@@ -52,10 +49,10 @@ export default {
   },
   computed: {
     repliesCount () {
-      return Object.keys(this.thread.posts).length - 1 // count the replies with array
+      return countObjectProperties(this.thread.posts) - 1 // count the replies with array
     },
     user () {
-      return sourceData.users[this.thread.userId]
+      return this.$store.state.users[this.thread.userId]
     }
   }
 }
