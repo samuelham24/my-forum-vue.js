@@ -1,4 +1,5 @@
 <template>
+  <!-- Post list item to show a post from user -->
   <div class="post">
     <div class="user-info">
       <a href="#" class="user-name">{{user.name}}</a>
@@ -17,7 +18,6 @@
 </template>
 
 <script>
-import sourceData from '@/data'
 export default {
   props: {
     post: {
@@ -26,9 +26,9 @@ export default {
     }
   },
   computed: {
-    // computed properties make sure the user will be updated if change happen in sourceData
+    // computed properties make sure the user will be updated if change happen in  this.$store.state
     user () {
-      return sourceData.users[this.post.userId]
+      return this.$store.state.users[this.post.userId]
     },
 
     userPostsCount () {
