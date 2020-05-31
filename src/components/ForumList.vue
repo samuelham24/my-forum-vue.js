@@ -1,24 +1,41 @@
 <template>
-    <!-- ForumList to render multiple ForumListItems -->
-    <div>
-    <ForumListItem
-      v-for="forum in forums"
-      :forum="forum"
-      :key="forum['.key']"
-    />
+    <!-- Forum list item to show a link to the forum page -->
+  <div class="forum-listing">
+    <div class="forum-details">
+      <!-- Forum list like pets, vehicles, annoucement, etc -->
+      <router-link
+        class="text-xlarge"
+        :to="{name: 'Forum', params: {id: forum['.key']}}"
+      >
+        {{forum.name}}
+      </router-link>
+      <p>{{forum.description}}</p>
     </div>
+
+    <div class="threads-count">
+      <p class="count">{{threadsCount}}</p>
+      {{threadsCount === 1 ? 'thread' : 'threads'}}
+    </div>
+
+    <div class="last-thread">
+      <!-- TODO: implement later -->
+    </div>
+  </div>
 </template>
 
 <script>
-    import ForumListItem from './ForumListItem'
     export default {
-      components: {
-        ForumListItem
-      },
       props: {
-        forums: {
+        forum: {
           required: true,
-          type: Array
+          type: Object
+        }
+      },
+      computed: {
+        threadsCount () {
+          return this.forum.threads
+            ? Object.values(this.forum.threads).length
+            : 0
         }
       }
     }
