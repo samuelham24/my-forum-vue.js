@@ -1,69 +1,53 @@
 <template>
-  <div class="post">
-    <div class="user-info">
-      <a href="#" class="user-name">{{user.name}}</a>
-
-      <a href="#">
-        <img class="avatar-large" :src="user.avatar" alt="">
-      </a>
-
-      <p class="desktop-only text-small">{{userThreadsCount}} threads</p>
-    </div>
-
-    <div class="post-content">
-      <template v-if="!editing">
-        <div>
-          {{post.text}}
+  <div class="forum-wrapper">
+    <div class="col-full push-top">
+      <div class="forum-header">
+        <div class="forum-details">
+          <h1>{{forum.name}}</h1>
+          <p class="text-lead">{{forum.description}}</p>
         </div>
-        <a @click.prevent="editing = true" href="#" style="margin-left: auto;" class="link-unstyled" title="Make a change"><i class="fa fa-pencil"></i></a>
-      </template>
-      <div v-else>
-        <PostEditor
-          :post="post"
-          @save="editing = false"
-          @cancel="editing = false"
-        />
+        <router-link
+          :to="{name: 'ThreadCreate', params: {forumId: this.forum['.key']}}"
+        >
+          Start a thread
+        </router-link>
       </div>
-
     </div>
 
-    <div class="post-date text-faded">
-      <div v-if="post.edited" class="edition-info">edited</div>
-      <AppDate :timestamp="post.publishedAt"/>
+    <div class="col-full push-top">
+      <ThreadList :threads="threads" />
     </div>
   </div>
 </template>
 
 <script>
-    import PostEditor from './PostEditor'
-    export default {
-      props: {
-        post: {
-          required: true,
-          type: Object
-        }
-      },
-      components: {
-        PostEditor
-      },
-      data () {
-        return {
-          editing: false
-        }
-      },
-      computed: {
-        user () {
-          return this.$store.state.users[this.post.userId]
-        },
-        userPostsCount () {
-          return this.$store.getters.userPostsCount(this.post.userId)
-        },
-        userThreadsCount () {
-          return this.$store.getters.userThreadsCount(this.post.userId)
-        }
-      }
+import ThreadList from '@/components/ThreadList'
+
+export default {
+  components: {
+    ThreadList
+  },
+  props: {
+    id: {
+      required: true,
+      type: String
     }
+  },
+  computed: {
+    // evaluated every time the dependencies change
+    forum () {
+      return this.$store.state.forums[this.id]
+    },
+    threads () {
+      return Object.values(this.$store.state.threads) // object convert to array
+        .filter(thread => thread.forumId === this.id) // find forum's threads
+    }
+  }
+}
 </script>
 
 <style scoped>
+.forum-wrapper {
+  width: 100%
+}
 </style>
