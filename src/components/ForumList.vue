@@ -1,28 +1,23 @@
 <template>
-    <!-- ForumList to render multiple ForumListItems -->
-    <div>
-    <ForumListItem
-      v-for="forum in forums"
-      :forum="forum"
-      :key="forum['.key']"
-    />
-    </div>
+  <div class="post-list">
+    <!-- PostList needs to know which post to render -->
+    <PostListItem v-for="post in posts" :post="post" :key="post['.key']" />
+  </div>
 </template>
 
 <script>
-    import ForumListItem from './ForumListItem'
-    export default {
-      components: {
-        ForumListItem
-      },
-      props: {
-        forums: {
-          required: true,
-          type: Array
-        }
-      }
-    }
-</script>
+import PostListItem from './PostListItem'
 
-<style scoped>
-</style>
+export default {
+  components: {
+    PostListItem
+  },
+
+  props: {
+    posts: {
+      required: true,
+      type: Array
+    }
+  }
+}
+</script>
