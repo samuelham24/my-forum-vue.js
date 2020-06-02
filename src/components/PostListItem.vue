@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div v-if="post && user" class="post">
     <div class="user-info">
       <a href="#" class="user-name">{{user.name}}</a>
 
@@ -8,6 +8,7 @@
       </a>
 
       <p class="desktop-only text-small">{{userThreadsCount}} threads</p>
+      <p class="desktop-only text-small">{{userPostsCount}} posts</p>
     </div>
 
     <div class="post-content">
