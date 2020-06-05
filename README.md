@@ -1,6 +1,7 @@
 # my-forum
 
-> Feel free to share forum
+> MamiCamp 2020 Final Project
+> "Feel free to share forum"
 
 ## Build Setup
 
