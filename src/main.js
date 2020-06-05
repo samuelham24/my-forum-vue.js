@@ -7,6 +7,9 @@ import App from './App'
 import router from './router'
 import store from '@/store'
 import AppDate from '@/components/AppDate'
+import vuelidate from 'vuelidate'
+
+Vue.use(vuelidate)
 Vue.component('AppDate', AppDate) // register the component globally only when PostListItem loaded
 Vue.config.productionTip = false
 
@@ -29,8 +32,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App },
-  beforeCreate () {
-    store.dispatch('fetchUser', {id: store.state.authId})
-  }
+  components: { App }
 })
