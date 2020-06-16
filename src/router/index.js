@@ -60,23 +60,23 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/register',
-      name: 'Register',
-      component: Register,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/signin',
-      name: 'SignIn',
-      component: SignIn,
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/me/edit',
       name: 'ProfileEdit',
       component: Profile,
       props: {edit: true},
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/signin',
+      name: 'SignIn',
+      component: SignIn,
+      meta: { requiresGuest: true }
     },
     {
       path: '/logout',
@@ -98,6 +98,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   console.log(`🚦 navigating to ${to.name} from ${from.name}`)
+
   store.dispatch('auth/initAuthentication')
     .then(user => {
       if (to.matched.some(route => route.meta.requiresAuth)) {
